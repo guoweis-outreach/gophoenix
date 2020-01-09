@@ -44,7 +44,7 @@ func (ch *Channel) Push(event string, payload interface{}, replyHandler func(pay
 }
 
 // Reply sends a message on the topic.
-func (ch *Channel) Reply(ref int64, channel string, event string, payload interface{}, replyHandler func(payload interface{})) error {
+func (ch *Channel) Reply(ref int64, channel string, event string, payload interface{}) error {
 	msg := &Message{
 		Topic:   channel,
 		Event:   event,
@@ -59,10 +59,6 @@ func (ch *Channel) Reply(ref int64, channel string, event string, payload interf
 func (ch *Channel) PushNoReply(event string, payload interface{}) error {
 	ref := ch.rc.nextRef()
 	return ch.sendMessage(ref, event, payload)
-}
-
-func (ch *Channel) join(payload interface{}) error {
-	return ch.sendJoinMessage(payload)
 }
 
 func (ch *Channel) sendJoinMessage(payload interface{}) error {

@@ -63,7 +63,7 @@ func (c *Client) Join(callbacks ChannelReceiver, topic string, payload interface
 	rr := newReplyRouter()
 	ch := &Channel{topic: topic, t: c.t, rc: rc, joinRef: joinRef, rr: rr, ln: func() { c.mr.unsubscribe(topic) }}
 	c.mr.subscribe(topic, callbacks, rr)
-	err := ch.join(payload)
+	err := ch.sendJoinMessage(payload)
 
 	if err != nil {
 		return nil, err
